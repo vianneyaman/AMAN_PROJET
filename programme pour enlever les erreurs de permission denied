@@ -1,0 +1,17 @@
+COMMANDE POUR RESOUDRE LES PROBLEMES DE PERMISSION DENIED QUI VEUT DIRE que Docker rencontre un problème pour interagir avec le conteneur. Cela peut être dû à un problème avec les permissions, les processus bloqués ou des configurations spécifiques de votre système. Voici quelques étapes pour résoudre ce problème
+
+c'est surement dû au processus bloqué
+
+ps aux | grep docker pour Vérifier si des processus Docker sont en conflit 
+
+Si vous trouvez des processus spécifiques à mon conteneur, terminez-les
+sudo kill -9 <PID>
+
+si je trouve des processus , je vais faire 
+sudo kill -9 <PID>
+
+ensuite on fait sudo docker stop ffb5eadef3013f81a76235b35ec43920e4e8544b9af88fdcbd0b646bb46dbd94
+sudo docker rm ffb5eadef3013f81a76235b35ec43920e4e8544b9af88fdcbd0b646bb46dbd94
+
+après quoi on fait sudo systemctl restart docker
+

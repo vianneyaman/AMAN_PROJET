@@ -1,0 +1,29 @@
+/* Enlever le bleu du titre de Gestion Contact */
+.card-header {
+    background-color: #f8f9fa; /* Couleur neutre (gris clair) */
+    color: #333; /* Couleur texte gris foncé */
+    font-weight: bold;
+}
+
+/* Modifier le style du bouton lors du survol */
+button[type="submit"] {
+    background-color: #007bff; /* Couleur initiale bleue */
+    color: white; /* Texte blanc */
+    border: none;
+    transition: background-color 0.3s ease-in-out; /* Animation fluide */
+}
+
+button[type="submit"]:hover {
+    background-color: #28a745; /* Change au survol (vert) */
+    color: white; /* Texte reste blanc */
+}
+
+/* Style des autres boutons */
+button {
+    border: none;
+    transition: transform 0.3s ease-in-out; /* Effet fluide sur clic */
+}
+
+button:hover {
+    transform: scale(1.05); /* Légère mise en relief */
+}
