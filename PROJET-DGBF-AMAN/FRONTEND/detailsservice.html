@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liste des Services</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center">Liste des Services</h1>
+        <div class="d-flex justify-content-between mb-3">
+            <input type="text" id="search" class="form-control w-50" placeholder="Rechercher un service..." oninput=searchServices()>
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nom</th>
+                    <th>Localisation</th>
+                    <th>Contact</th>
+                    <th>Département rattaché</th> <!-- Nouvelle colonne -->
+                </tr>
+            </thead>
+            <tbody id="serviceTableBody">
+                <!-- Les services seront insérés ici -->
+            </tbody>
+        </table>
+        
+        <div id="pagination" class="d-flex justify-content-center mt-4">
+            <!-- La pagination sera ajoutée ici -->
+        </div>
+        <!-- Boutons d'actions -->
+    <div class="d-flex justify-content-between mb-3">
+        <a href="base.html" class="btn btn-primary" title="Cliquez ici pour retourner à l'écran d'Acceuil">Retour à l'accueil</a>
+        <a href="ajoutservice.html" class="btn btn-success custom-btn" target="_blank" title="Cliquez ici pour créer un service">Ajouter un Service</a>
+    </div>
+    </div>
+<style>
+    .custom-btn {
+        background-color: #a7eba4;
+        border-radius: 20px;
+        padding: 10px 20px;
+        font-size: 18px;
+        color: rgb(0, 0, 0);
+    }
+    .custom-btn:hover {
+        background-color: #35984b;
+    }
+    
+    .btn-primary {
+        background-color: rgb(234, 104, 104);
+        border-radius:20px ;
+        padding:10px 20px ;
+        font-size: 18px;
+        color: rgb(0, 0, 0);
+    }
+    .btn-primary:hover {
+        background-color: rgb(74, 79, 230);
+    }
+
+    .btn-primary:active{
+        background-color: #6c63ff;
+    }
+</style>
+    <script>
+    
+        async function loadService() 
+      {
+        try {
+        const response = await fetch("http://localhost:8000/services/");
+        if (!response.ok) {
+            throw new Error(`Erreur HTTP : ${response.status}`);
+        }
+
+        const data = await response.json();
+
+        const tableBody = document.getElementById("serviceTableBody");
+        tableBody.innerHTML = "";  // Réinitialiser le contenu de la table
+
+        if (data.services.length === 0) {
+            showAlert("Aucun service trouvé.", "warning");
+            return;
+        }
+
+        data.services.forEach((service) => {
+            const row = document.createElement("tr");
+            row.innerHTML = `
+                <td>${service.id}</td>
+                <td>${service.nom}</td>
+                <td>${service.localisation}</td>
+                <td>
+                    <a href="tel:${service.contact}" class="appel" title="Cliquez ici pour lancer un appel">
+                     <i class="bi bi-telephone-fill"></i> ${service.contact}
+                    </a>
+                        </td>
+                <td>${service.departement_nom ?? "Non attribué"}</td>
+                `;
+                tableBody.appendChild(row);
+                });
+                } catch (error) {
+                console.error("Erreur lors du chargement des services :", error);
+                showAlert(`Une erreur est survenue : ${error.message}`, "danger");
+                 }
+        }
+
+        function showAlert(message, type) {
+         const alert = document.createElement("div");
+            alert.classList.add("alert", `alert-${type}`);
+            alert.textContent = message;
+            document.body.appendChild(alert);
+            setTimeout(() => alert.remove(), 3000);
+        }
+
+        window.onload = loadService;
+
+    // Script pour rechercher un service
+    function searchServices() {
+            const input = document.getElementById('search').value.toLowerCase();
+            const rows = document.querySelectorAll('#serviceTableBody tr');
+
+            rows.forEach(row => {
+                const cells = row.getElementsByTagName('td');
+                let found = false;
+
+                // Vérifiez chaque cellule pour voir si elle correspond à la recherche
+                for (let i = 0; i < cells.length; i++) {
+                    if (cells[i].textContent.toLowerCase().includes(input)) {
+                        found = true;
+                        break;
+                    }
+                }
+
+                // Afficher ou masquer la ligne
+                row.style.display = found ? '' : 'none';
+            });
+        }
+
+    </script>
+    <style>
+
+    table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 12px;
+    text-align: left;
+    border: 1px solid #e7ece7;
+}
+
+th {
+    background-color: #a7eba4;
+}
+
+tr:hover {
+    background-color: #f9f9f9;
+}
+/* style pour l'icone appel*/
+.appel{
+    color: #6c63ff;
+    text-decoration: none;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+}
+
+.appel i {
+    margin-right: 5px;
+    color: #52db76;
+}
+
+.appel:hover {
+    color: #52db76;
+    text-decoration: underline;
+}
+
+    </style>
+</body>
+</html>

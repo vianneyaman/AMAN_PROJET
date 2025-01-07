@@ -1,0 +1,110 @@
+/* Style global */
+body {
+    margin: 0px;
+    padding: 0px;
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    
+}
+
+/* Conteneur principal */
+.form-container {
+    width: 65%;
+    background-color: #ffffff;
+    padding: 60px;
+    margin: 50px auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+}
+
+/* Titre */
+h1 {
+    text-align: center;
+    color: #333333;
+    margin-bottom: 40px;
+}
+
+/* Champs du formulaire */
+.styled-form {
+    margin-bottom: 25px;
+}
+.form-field {
+    margin-bottom: 25px;
+}
+.form-fielt{
+    margin-bottom: 25px;
+}
+.styled-form label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 7px;
+    color: #555555;
+}
+
+.styled-form input, 
+.styled-form textarea, 
+.styled-form select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #dddddd;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+/* Bouton de soumission */
+.btn-submit {
+    display: block;
+    width: 100%;
+    background-color: #4CAF50;
+    color: #ffffff;
+    border: none;
+    padding: 10px 15px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn-submit:hover {
+    background-color: #6c63ff;
+}
+
+/* Message de résultat */
+.message {
+    margin-top: 15px;
+    font-size: 14px;
+    font-weight: bold;
+    text-align: center;
+}
+
+ /* Style pour le bouton retour à l'acceuil  */
+    /* Bouton  en bas à gauche */
+    .retour-btn {
+        position: fixed;
+        bottom: 85px;
+        left: 263px;
+        font-size: 1.1rem;
+        padding: 12px 20px;
+        background-color: #6c63ff; /* Couleur principale */
+        color: white;
+        border-radius: 25px;
+        text-decoration: none;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        transition: background-color 0.3s ease, transform 0.3s ease;
+        z-index: 1000; /* Assurez-vous que le bouton est toujours visible */
+    }
+    
+    .retour-btn:hover {
+        background-color: #4CAF50; /* Couleur au survol */
+        transform: translateY(-5px);
+    }
+    
+    .retour-btn:active {
+        background-color: #1e5d34; /* Couleur lors du clic */
+        transform: translateY(2px);
+    }
+
+    .retour-btn svg {
+    margin-right: 10px;
+    vertical-align: middle;
+}

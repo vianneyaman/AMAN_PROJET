@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ajouter un Département</title>
+    <link rel="stylesheet" href="ajoutdepart.css">
+</head>
+<body>
+    <div class="form-container">
+        <form id="departementForm" class="styled-form">
+            <h1>Création des Départements</h1>
+            <div class="form-field">
+                <label for="nom">Nom du Département :</label>
+                <input type="text" id="nom" name="nom" placeholder="Ex: Informatique" required autocomplete="off"><!-- c'est ici je vais pouvoir fait de telle sorte que quand je vais actualiser la page les valeurs disparaissent-->
+            </div>
+
+            <div class="form-field">
+                <label for="localisation">Localisation :</label>
+                <input type="text" id="localisation" name="localisation" placeholder="Ex: Abidjan, Plateau" required autocomplete="off">
+            </div>
+
+            <div class="form-fielt">
+                <label for="description">Description :</label>
+                <textarea id="description" name="description" placeholder="Ex: Ce département se charge de ....." rows="4" required autocomplete="off"></textarea>
+            </div>
+
+            <div class="form-field">
+                <label for="contact">Contact :</label>
+                <input type="text" id="contact" name="contact" placeholder="Ex: +225 01 02 03 04 ou email@gmail" required autocomplete="off">
+            </div>
+
+            <div class="form-field">
+                <label for="est_interne">Le departement est interne ?</label>
+                <select id="est_interne" name="est_interne" required autocomplete="off">
+                    <option value="true">Oui</option>
+                    <option value="false">Non</option>
+                </select>
+            </div>
+
+            <button type="submit" class="btn-submit">ENREGISTRER</button>
+
+            <div id="message" class="message"></div>
+        </form>
+    </div>
+    
+    <script>
+        document.getElementById("departementForm").addEventListener("submit", async function (event) {
+            event.preventDefault(); // Empêche le rechargement de la page
+    
+            // Récupérer les valeurs des champs du formulaire
+            const nom = document.getElementById("nom").value;
+            const localisation = document.getElementById("localisation").value;
+            const description = document.getElementById("description").value;
+            const contact = document.getElementById("contact").value;
+            const est_interne = document.getElementById("est_interne").value === "true"; // Convertir en booléen
+    
+            // Préparer les données à envoyer
+            const departementData = {
+                nom: nom,
+                localisation: localisation,
+                description: description,
+                contact: contact,
+                est_interne: est_interne
+            };
+    
+            try {
+                // Envoyer la requête POST au backend
+                const response = await fetch("http://127.0.0.1:8000/departements/", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(departementData),
+                });
+    
+                // Gérer la réponse
+                const result = await response.json();
+                if (response.ok) {
+                    // Rediriger vers la page de succès
+                    window.location.href = "success.html";
+                } else {
+                    document.getElementById("message").innerHTML = `
+                        <p style="color: red;">Erreur : ${result.detail}</p>
+                    `;
+                }
+            } catch (error) {
+                // Gérer les erreurs inattendues
+                console.error("Erreur lors de l'envoi des données :", error);
+                document.getElementById("message").innerHTML = `
+                    <p style="color: red;">Erreur de connexion au serveur.</p>
+                `;
+            }
+        });
+    </script>
+    
+    <div class="retour_accueil">
+        <a href="base.html" class="btn btn-primary retour-btn">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="black" viewBox="0 0 16 16">
+                <path d="M8 3.293l6 6V13a2 2 0 0 1-2 2h-2v-3H6v3H4a2 2 0 0 1-2-2v-3.707l6-6zm5 6.879V13a1 1 0 0 0 1-1v-2.121l-6-6-6 6V12a1 1 0 0 0 1 1v-2.879l5-5 5 5z"/>
+            </svg>
+            Retour à l'accueil
+        </a>
+    </div>
+    
+</body>
+</html>
